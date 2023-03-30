@@ -4,15 +4,11 @@ using UnityEngine;
 
 public class MouseLook : MonoBehaviour
 {
-
-    [SerializeField]private float sensitivityX;
-
-    [SerializeField]private float sensitivityY;
-
-    [SerializeField]private Transform Orientation;
-
-    private float RotationX;
-    private float RotationY;
+    [SerializeField] private float sensitivityX;
+    [SerializeField] private float sensitivityY;
+    [SerializeField] private Transform Orientation;
+    private float rotationX;
+    private float rotationY;
     // Start is called before the first frame update
     void Start()
     {
@@ -26,12 +22,11 @@ public class MouseLook : MonoBehaviour
         float mouseX = Input.GetAxisRaw("Mouse X") * sensitivityX * Time.deltaTime;
         float mouseY = Input.GetAxisRaw("Mouse Y") * sensitivityY * Time.deltaTime;
 
-        RotationY += mouseX;
-        RotationX -= mouseY;
+        rotationY += mouseX;
+        rotationX -= mouseY;
 
-        RotationX = Mathf.Clamp(RotationX, -90f, 90f);
-        transform.rotation = Quaternion.Euler(RotationX, RotationY, 0);
-
-        Orientation.rotation = Quaternion.Euler(0, RotationY, 0);
+        rotationX = Mathf.Clamp(rotationX, -90f, 90f);
+        transform.rotation = Quaternion.Euler(rotationX, rotationY, 0);
+        Orientation.rotation = Quaternion.Euler(0, rotationY, 0);
     }
 }

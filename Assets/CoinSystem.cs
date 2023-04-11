@@ -14,8 +14,8 @@ public class CoinSystem : MonoBehaviour
         if (other.CompareTag("Coin"))
         {
             coinAmount++;
-            textCoinAmount.text = "Total coins" + coinAmount;
-            Destroy(other);
+            textCoinAmount.text = "Total coins: " + coinAmount;
+            Destroy(other.gameObject);
         }
     }
 }

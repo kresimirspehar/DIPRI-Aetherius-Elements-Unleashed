@@ -16,18 +16,18 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float groundDistance = 0.4f;
     private bool isGrounded;
 
-    [Header ("Jumping")]
+    [Header("Jumping")]
     [SerializeField] private float jumpForce;
     [SerializeField] private float jumpCd;
     [SerializeField] private float airMultiplier;
-    private bool readyJump;  
-   
+    private bool readyJump;
+
     // Start is called before the first frame update
     void Start()
     {
         readyJump = true;
         rb = GetComponent<Rigidbody>();
-        rb.freezeRotation = true;       
+        rb.freezeRotation = true;
     }
 
     // Update is called once per frame
@@ -36,55 +36,79 @@ public class PlayerMovement : MonoBehaviour
         getInput();
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundLayer);
 
-        if(isGrounded) {
+        if (isGrounded)
+        {
             rb.drag = groundDrag;
         }
-        else {
+        else
+        {
             rb.drag = 0;
         }
         speedControl();
     }
 
-    private void FixedUpdate() {
+    private void FixedUpdate()
+    {
         movePlayer();
     }
-    
-    private void getInput() {
+
+    private void getInput()
+    {
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
 
-        if(Input.GetKey(KeyCode.Space) && isGrounded && readyJump) {
+        if (Input.GetKey(KeyCode.Space) && isGrounded && readyJump)
+        {
             readyJump = false;
             jump();
             Invoke(nameof(resetJump), jumpCd);
         }
     }
 
-    private void movePlayer() {
+    private void movePlayer()
+    {
         direction = Orientation.forward * verticalInput + Orientation.right * horizontalInput;
-        if(isGrounded) {
+        if (isGrounded)
+        {
             rb.AddForce(direction.normalized * moveSpeed, ForceMode.Force);
         }
-        else if(!isGrounded) {
+        else if (!isGrounded)
+        {
             rb.AddForce(direction.normalized * moveSpeed * airMultiplier, ForceMode.Force);
         }
-    }   
+    }
 
-    private void speedControl() {
+    private void speedControl()
+    {
         Vector3 flatVel = new Vector3(rb.velocity.x, 0, rb.velocity.z);
 
-        if (flatVel.magnitude > moveSpeed) {
+        if (flatVel.magnitude > moveSpeed)
+        {
             Vector3 limitedVel = flatVel.normalized * moveSpeed;
             rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z);
         }
     }
 
-    private void jump() {
+    private void jump()
+    {
         rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
         rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
     }
 
-    private void resetJump() {
+    private void resetJump()
+    {
         readyJump = true;
+    }
+    public void canMove(bool value)
+    {
+        if (value)
+        {
+            moveSpeed = 50;
+
+        }
+        else
+        {
+            moveSpeed = 0;
+        }
     }
 }

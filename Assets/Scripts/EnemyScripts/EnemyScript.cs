@@ -25,6 +25,7 @@ public class EnemyScript : MonoBehaviour
     {
         if (Vector3.Distance(transform.position, player.position) < searchDistance)
         {
+            Debug.Log("Gače");
             lookAt(player);
             followTarget(player, 1, walkingSpeed * 1.5f);
         }
@@ -41,7 +42,7 @@ public class EnemyScript : MonoBehaviour
     }
     private void lookAt(Transform target)
     {
-        Vector3 targetPosition = new(target.position.x, transform.position.y, target.position.z);
+        Vector3 targetPosition = new(target.position.x, target.position.y, target.position.z);
         rotation.LookAt(targetPosition);
         transform.rotation = Quaternion.Slerp(transform.rotation, rotation.rotation, 0.15f);
     }
@@ -49,7 +50,7 @@ public class EnemyScript : MonoBehaviour
     {
         if (Vector3.Distance(transform.position, target.position) > stopingDistance)
         {
-            rb.AddRelativeForce(Vector3.forward * movingSpeed + Vector3.down * 9.81f, ForceMode.Force);
+            rb.AddRelativeForce(Vector3.forward * movingSpeed, ForceMode.Force);
         }
         else
         {

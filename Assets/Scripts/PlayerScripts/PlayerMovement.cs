@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    
     [SerializeField] private float moveSpeed = 50;
+    [SerializeField] private float sprintSpeed = 150;
     [SerializeField] private Transform Orientation;
     private float horizontalInput;
     private float verticalInput;
@@ -22,10 +24,15 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float airMultiplier;
     private bool readyJump;
 
+    [Header("Sprinting")]
+    [SerializeField] private float sprintCd;
+    private bool readySprint;
+
     // Start is called before the first frame update
     void Start()
     {
         readyJump = true;
+        readySprint = true;
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
     }
@@ -57,13 +64,21 @@ public class PlayerMovement : MonoBehaviour
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
 
-        if (Input.GetKey(KeyCode.Space) && isGrounded && readyJump)
-        {
-            readyJump = false;
-            jump();
-            Invoke(nameof(resetJump), jumpCd);
-        }
+    if (Input.GetKey(KeyCode.LeftShift) && isGrounded && readySprint) 
+    {
+        readySprint = false;
+        moveSpeed = sprintSpeed;
+        InvokeRepeating(nameof(resetSprint), sprintCd, sprintCd);
     }
+
+    if (Input.GetKey(KeyCode.Space) && isGrounded && readyJump)
+    {
+        readyJump = false;
+        jump();
+        Invoke(nameof(resetJump), jumpCd);
+    }
+    }
+
 
     private void movePlayer()
     {
@@ -99,6 +114,12 @@ public class PlayerMovement : MonoBehaviour
     {
         readyJump = true;
     }
+
+    private void resetSprint() {
+        readySprint = true;
+        moveSpeed = 50;
+    }
+
     public void canMove(bool value)
     {
         if (value)

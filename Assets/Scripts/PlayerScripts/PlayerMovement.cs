@@ -7,6 +7,7 @@ public class PlayerMovement : MonoBehaviour
     
     [SerializeField] private float moveSpeed = 50;
     [SerializeField] private float sprintSpeed = 150;
+    [SerializeField] private float crouchSpeed = 25;
     [SerializeField] private Transform Orientation;
     private float horizontalInput;
     private float verticalInput;
@@ -28,11 +29,20 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float sprintCd;
     private bool readySprint;
 
+    [Header("Crouching")]
+    [SerializeField] private float crouchCd;
+    [SerializeField] private float crouchHeight = 0.5f;
+    private bool readyCrouch;
+    private bool isCrouched;
+
     // Start is called before the first frame update
     void Start()
     {
         readyJump = true;
         readySprint = true;
+        readyCrouch = true;
+        isCrouched = false;
+
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
     }
@@ -71,6 +81,12 @@ public class PlayerMovement : MonoBehaviour
         InvokeRepeating(nameof(resetSprint), sprintCd, sprintCd);
     }
 
+    if (Input.GetKeyDown(KeyCode.C) && isGrounded && readyCrouch) {
+        readyCrouch = false;
+        crouch();
+        Invoke(nameof(resetCrouch), crouchCd);
+    }
+
     if (Input.GetKey(KeyCode.Space) && isGrounded && readyJump)
     {
         readyJump = false;
@@ -82,16 +98,25 @@ public class PlayerMovement : MonoBehaviour
 
     private void movePlayer()
     {
-        direction = Orientation.forward * verticalInput + Orientation.right * horizontalInput;
-        if (isGrounded)
+        if (isCrouched)
+    {
+            direction = Orientation.forward * verticalInput + Orientation.right * horizontalInput;
+            rb.AddForce(direction.normalized * crouchSpeed, ForceMode.Force);
+    }
+        else
+    {
+            direction = Orientation.forward * verticalInput + Orientation.right * horizontalInput;
+            if (isGrounded)
         {
-            rb.AddForce(direction.normalized * moveSpeed, ForceMode.Force);
+                rb.AddForce(direction.normalized * moveSpeed, ForceMode.Force);
         }
-        else if (!isGrounded)
+            else if (!isGrounded)
         {
-            rb.AddForce(direction.normalized * moveSpeed * airMultiplier, ForceMode.Force);
+                rb.AddForce(direction.normalized * moveSpeed * airMultiplier, ForceMode.Force);
         }
     }
+}
+
 
     private void speedControl()
     {
@@ -113,6 +138,21 @@ public class PlayerMovement : MonoBehaviour
     private void resetJump()
     {
         readyJump = true;
+    }
+
+    private void resetCrouch() {
+        readyCrouch = true;
+    }
+
+    private void crouch() {
+        if (isCrouched) {
+            isCrouched = false;
+            transform.localScale = new Vector3(1,1,1);
+        }
+        else {
+            isCrouched = true;
+            transform.localScale = new Vector3(1, crouchHeight, 1);
+        }        
     }
 
     private void resetSprint() {

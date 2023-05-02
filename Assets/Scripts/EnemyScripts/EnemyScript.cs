@@ -25,6 +25,7 @@ public class EnemyScript : MonoBehaviour
     {
         if (Vector3.Distance(transform.position, player.position) < searchDistance)
         {
+            Debug.Log("Gače");
             lookAt(player);
             followTarget(player, 1, walkingSpeed * 1.5f);
         }

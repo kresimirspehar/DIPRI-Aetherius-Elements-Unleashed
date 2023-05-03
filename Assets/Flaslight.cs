@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Flaslight : MonoBehaviour
 {
+    public AudioSource toggleSound;
     public GameObject ON;
     public GameObject OFF;
     private bool isON;
@@ -33,6 +34,7 @@ public class Flaslight : MonoBehaviour
 
 
             isON=!isON;
+            toggleSound.Play();
         }
         
     }

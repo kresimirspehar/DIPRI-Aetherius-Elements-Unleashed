@@ -7,7 +7,7 @@ public class CoinSystem : MonoBehaviour
 {
     [SerializeField] private int coinAmount = 0;
     [SerializeField] private TextMeshProUGUI textCoinAmount;
-
+    public AudioSource coinSound;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -15,6 +15,7 @@ public class CoinSystem : MonoBehaviour
         {
             coinAmount++;
             textCoinAmount.text = "Total coins: " + coinAmount;
+            coinSound.Play();
             Destroy(other.gameObject);
         }
     }

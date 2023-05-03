@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    
+    public AudioSource running;
+    public AudioSource jumpsound;
+    public AudioSource walkingsound;
     [SerializeField] private float moveSpeed = 50;
     [SerializeField] private float sprintSpeed = 150;
     [SerializeField] private float crouchSpeed = 25;
@@ -69,53 +71,73 @@ public class PlayerMovement : MonoBehaviour
         movePlayer();
     }
 
-    private void getInput()
-    {
-        horizontalInput = Input.GetAxisRaw("Horizontal");
-        verticalInput = Input.GetAxisRaw("Vertical");
+  private void getInput()
+{
+    horizontalInput = Input.GetAxisRaw("Horizontal");
+    verticalInput = Input.GetAxisRaw("Vertical");
 
-    if (Input.GetKey(KeyCode.LeftShift) && isGrounded && readySprint) 
+    if (Input.GetKey(KeyCode.LeftShift) && (horizontalInput != 0 || verticalInput != 0) && isGrounded && readySprint) 
     {
         readySprint = false;
         moveSpeed = sprintSpeed;
         InvokeRepeating(nameof(resetSprint), sprintCd, sprintCd);
+        if(!isCrouched){running.Play();}
+        walkingsound.Pause(); // Stop  walking sound when player is sprinting
     }
 
     if (Input.GetKeyDown(KeyCode.C) && isGrounded && readyCrouch) {
         readyCrouch = false;
         crouch();
         Invoke(nameof(resetCrouch), crouchCd);
+        
     }
 
     if (Input.GetKey(KeyCode.Space) && isGrounded && readyJump)
     {
         readyJump = false;
         jump();
+        jumpsound.Play();
         Invoke(nameof(resetJump), jumpCd);
+        walkingsound.Stop(); // Stop walkingsound when player is jumping
     }
-    }
+}
+
+
 
 
     private void movePlayer()
+{
+    if (isCrouched)
     {
-        if (isCrouched)
-    {
-            direction = Orientation.forward * verticalInput + Orientation.right * horizontalInput;
-            rb.AddForce(direction.normalized * crouchSpeed, ForceMode.Force);
+        direction = Orientation.forward * verticalInput + Orientation.right * horizontalInput;
+        rb.AddForce(direction.normalized * crouchSpeed, ForceMode.Force);
     }
-        else
+    else
     {
-            direction = Orientation.forward * verticalInput + Orientation.right * horizontalInput;
-            if (isGrounded)
+        direction = Orientation.forward * verticalInput + Orientation.right * horizontalInput;
+        if (isGrounded)
         {
-                rb.AddForce(direction.normalized * moveSpeed, ForceMode.Force);
+            rb.AddForce(direction.normalized * moveSpeed, ForceMode.Force);
+            if (walkingsound != null && (horizontalInput != 0f || verticalInput != 0f))
+            {
+                if (!walkingsound.isPlaying && readySprint)
+                {
+                    walkingsound.Play();
+                }
+            }
+            else
+            {
+                walkingsound.Stop();
+            }
         }
-            else if (!isGrounded)
+        else if (!isGrounded)
         {
-                rb.AddForce(direction.normalized * moveSpeed * airMultiplier, ForceMode.Force);
+            rb.AddForce(direction.normalized * moveSpeed * airMultiplier, ForceMode.Force);
+            walkingsound.Stop(); // Stop the walking sound when player is jumping
         }
     }
 }
+
 
 
     private void speedControl()
@@ -158,6 +180,7 @@ public class PlayerMovement : MonoBehaviour
     private void resetSprint() {
         readySprint = true;
         moveSpeed = 50;
+        running.Pause();
     }
 
     public void canMove(bool value)

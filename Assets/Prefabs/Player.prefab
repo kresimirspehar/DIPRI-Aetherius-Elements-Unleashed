@@ -312,6 +312,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bee35562a59b9fa40a504b52a6bd786b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  toggleSound: {fileID: 0}
   ON: {fileID: 1905245530927703316}
   OFF: {fileID: 1905245531487505458}
 --- !u!1 &1905245530743145610
@@ -685,6 +686,7 @@ GameObject:
   - component: {fileID: 1905245531109825592}
   - component: {fileID: 1905245531109825595}
   - component: {fileID: 1905245531109825594}
+  - component: {fileID: 8567875291733358696}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -723,8 +725,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1e993125e6165f46865980c5ff976e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  running: {fileID: 0}
+  jumpsound: {fileID: 0}
+  walkingsound: {fileID: 0}
   moveSpeed: 50
   sprintSpeed: 150
+  crouchSpeed: 25
   Orientation: {fileID: 1905245530378896057}
   groundDrag: 5
   groundCheck: {fileID: 1905245531069172007}
@@ -736,6 +742,8 @@ MonoBehaviour:
   jumpCd: 0.25
   airMultiplier: 0.1
   sprintCd: 1
+  crouchCd: 0
+  crouchHeight: 0.5
 --- !u!54 &1905245531109825593
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -766,6 +774,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   coinAmount: 0
   textCoinAmount: {fileID: 0}
+  coinSound: {fileID: 0}
 --- !u!136 &1905245531109825595
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -795,6 +804,33 @@ MonoBehaviour:
   healthAmount: 5
   damageDelay: 1
   textHealth: {fileID: 0}
+--- !u!114 &8567875291733358696
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1905245531109825573}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b959663992998f1449ffdf1c850bccbd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnEarthTotemCollected:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1905245531487505458
 GameObject:
   m_ObjectHideFlags: 0

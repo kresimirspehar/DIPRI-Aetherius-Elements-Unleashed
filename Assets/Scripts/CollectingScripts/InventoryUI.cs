@@ -5,7 +5,7 @@ using TMPro;
 
 public class InventoryUI : MonoBehaviour
 {
-    public TextMeshProUGUI earthTotemText;
+     public TMP_Text earthTotemText;
     // Start is called before the first frame update
     void Start()
     {

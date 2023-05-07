@@ -913,6 +913,11 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7434091715763216036, guid: 9c0ea3a5b62361148a8ae810479a137b,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9c0ea3a5b62361148a8ae810479a137b, type: 3}
 --- !u!1 &362239664 stripped
@@ -1579,7 +1584,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 816c217dcc9eac44591db08cf18f0e44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  earthTotemText: {fileID: 0}
+  earthTotemText: {fileID: 906558342}
 --- !u!1001 &910415714
 PrefabInstance:
   m_ObjectHideFlags: 0

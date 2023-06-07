@@ -5,7 +5,8 @@ public class KeyHover : MonoBehaviour
 {
     public GameObject[] cubes;
     public GameObject hoverTextObject;
-    public string message = "Press E to obtain";
+    public bool pickup=false;
+    public string message = "Press E to obtain the key";
     public Vector3 offset = new Vector3(0f, 2f, 0f);
 
     private bool isHovering = false;
@@ -63,12 +64,17 @@ public class KeyHover : MonoBehaviour
         {
             hoverText.text = message;
         }
+        if(pickup){
+            hoverText.text="Castle door's are now open,\n\n head to the castle!";
+            hoverText.fontSize=0.24f;
+        }
     }
 
     private void PickupKey()
     {
+        pickup=true;
         DestroyCubes();
-        hoverTextObject.SetActive(false);
+        SetHoverTextMessage();
         gameObject.SetActive(false);
     }
      void DestroyCubes()

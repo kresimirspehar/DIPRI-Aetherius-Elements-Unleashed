@@ -50,6 +50,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Diffuse:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _EmissionMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -67,6 +71,10 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Normal:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -124,6 +132,7 @@ Material:
     - Vector1_D87711D5: 1.84
     - Vector1_FD71C679: 0.03
     - _AlphaClip: 1
+    - _Alpha_Clip: 0.1
     - _Blend: 0
     - _BumpScale: 1
     - _Cull: 2
@@ -138,6 +147,7 @@ Material:
     - _Metallic: 0.06
     - _NormalStrengh: 1.35
     - _Normal_Strenght: -1.14
+    - _Normal_Strength: 0
     - _OcclusionStrength: 1
     - _QueueControl: 0
     - _QueueOffset: 0

@@ -31,9 +31,9 @@ public class DialogueManager : MonoBehaviour
         if (isDisplayingLine)
         {
             StopAllCoroutines();
-            setInteraction(false);
             dialogueText.text = dialogueLines[currentLineIndex];
             currentLineIndex++;
+            setInteraction(false);
             isDisplayingLine = false;
         }
         else
@@ -42,8 +42,7 @@ public class DialogueManager : MonoBehaviour
             {
                 setInteraction(true);
                 StartCoroutine(DisplayLineByLetter(dialogueLines[currentLineIndex]));
-                currentLineIndex++;
-            }
+                }
             else
             {
                 EndDialogue();
@@ -61,7 +60,7 @@ public class DialogueManager : MonoBehaviour
             dialogueText.text += line[i];
             yield return new WaitForSeconds(letterDelay);
         }
-
+        currentLineIndex++;
         isDisplayingLine = false;
         setInteraction(false);
     }
@@ -91,7 +90,8 @@ public class DialogueManager : MonoBehaviour
     {
     if (!state && dialogueActive)
     {
-        StartCoroutine(DelayedInteraction());
+        interactionText.text = "Press [E] to continue interaction";
+        interactionText.gameObject.SetActive(true);
     }
     else
     {

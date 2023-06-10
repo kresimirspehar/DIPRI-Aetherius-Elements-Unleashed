@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FireLevelEnemy : MonoBehaviour
+public class FireEnemy : MonoBehaviour
 {
     private GameObject player;
     private FireGameplay gameplaySpawnerScript; 
@@ -15,7 +15,7 @@ public class FireLevelEnemy : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-        gameplaySpawnerScript = GameObject.FindGameObjectWithTag("volcane").GetComponent<FireGameplay>();
+        gameplaySpawnerScript = GameObject.FindGameObjectWithTag("Troll").GetComponent<FireGameplay>();
     }
 
     // Update is called once per frame
@@ -25,12 +25,9 @@ public class FireLevelEnemy : MonoBehaviour
         if (Vector3.Distance(player.transform.position, transform.position) <= range)
         {
             Destroy(gameObject);
-            gameplaySpawnerScript.decrementSpawnedEnemies();
+           // gameplaySpawnerScript.decrementSpawnedEnemies();
         }
-
-
         enemyMovement();
-
     }
 
 

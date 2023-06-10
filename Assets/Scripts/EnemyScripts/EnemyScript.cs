@@ -16,7 +16,9 @@ public class EnemyScript : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        Debug.Log("Gače");
         player = GameObject.FindGameObjectWithTag("Player").transform;
+        Debug.Log(player);
         rotation = transform.GetChild(0);
     }
 

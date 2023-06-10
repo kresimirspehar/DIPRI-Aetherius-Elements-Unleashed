@@ -8,6 +8,8 @@ TagManager:
   - doors
   - Fire
   - volcane
+  - Troll
+  - WayPoints
   layers:
   - Default
   - TransparentFX

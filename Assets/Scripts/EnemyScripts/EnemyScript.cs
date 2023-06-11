@@ -23,7 +23,9 @@ public class EnemyScript : MonoBehaviour
     // Update is called once per frame
     private void FixedUpdate()
     {
-        if (Vector3.Distance(transform.position, player.position) < searchDistance)
+        Vector3 enemyPosition = new(transform.position.x, 0, transform.position.z);
+        Vector3 playerPosition = new(player.position.x, 0, player.position.z);
+        if (Vector3.Distance(enemyPosition, playerPosition) < searchDistance)
         {
             Debug.Log("Gače");
             lookAt(player);
@@ -48,9 +50,11 @@ public class EnemyScript : MonoBehaviour
     }
     private void followTarget(Transform target, float stopingDistance, float movingSpeed)
     {
-        if (Vector3.Distance(transform.position, target.position) > stopingDistance)
+        Vector3 enemyPosition = new(transform.position.x, 0, transform.position.z);
+        Vector3 targetPosition = new(target.position.x, 0, target.position.z);
+        if (Vector3.Distance(enemyPosition, targetPosition) > stopingDistance)
         {
-            rb.AddRelativeForce(Vector3.forward * movingSpeed, ForceMode.Force);
+            rb.AddRelativeForce(Vector3.forward * movingSpeed, ForceMode.Acceleration);
         }
         else
         {

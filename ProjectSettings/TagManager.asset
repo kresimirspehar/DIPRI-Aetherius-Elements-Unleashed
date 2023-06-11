@@ -8,6 +8,8 @@ TagManager:
   - doors
   - Fire
   - volcane
+  - enemy
+  - airDoor
   layers:
   - Default
   - TransparentFX
